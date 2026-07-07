@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"strconv"
 
+	"github.com/getsentry/sentry-go"
 	sentryattr "github.com/getsentry/sentry-go/attribute"
 )
 
@@ -46,6 +47,16 @@ func String(k string, v string) Attr {
 	return new(k, v)
 }
 
+// Error returns a new Attr with the given key and error value.
+func Error(k string, v error) Attr {
+	return new(k, v)
+}
+
+// SentryLevel returns a new Attr with the given key and sentry.Level value.
+func SentryLevel(k string, v sentry.Level) Attr {
+	return new(k, v)
+}
+
 // K returns the key.
 func (a Attr) K() string {
 	return a.k
@@ -79,6 +90,10 @@ func (a Attr) valueString() string {
 		return strconv.FormatFloat(v, 'g', -1, 64)
 	case string:
 		return v
+	case error:
+		return v.Error()
+	case sentry.Level:
+		return string(v)
 	default:
 		return fmt.Sprintf("%v", v)
 	}

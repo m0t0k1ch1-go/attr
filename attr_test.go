@@ -1,10 +1,12 @@
 package attr_test
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"testing"
 
+	"github.com/getsentry/sentry-go"
 	sentryattr "github.com/getsentry/sentry-go/attribute"
 	"github.com/stretchr/testify/require"
 
@@ -52,6 +54,16 @@ func TestAttr_KV(t *testing.T) {
 			attr.String("string", "m0t0k1ch1"),
 			output{"string", "m0t0k1ch1"},
 		},
+		{
+			"error",
+			attr.Error("error", errors.New("something went wrong")),
+			output{"error", errors.New("something went wrong")},
+		},
+		{
+			"sentry.Level",
+			attr.SentryLevel("sentry.level", sentry.LevelDebug),
+			output{"sentry.level", sentry.LevelDebug},
+		},
 	}
 
 	for _, tc := range tcs {
@@ -94,6 +106,16 @@ func TestAttr_String(t *testing.T) {
 			attr.String("string", "m0t0k1ch1"),
 			"string=m0t0k1ch1",
 		},
+		{
+			"error",
+			attr.Error("error", errors.New("something went wrong")),
+			"error=something went wrong",
+		},
+		{
+			"sentry.Level",
+			attr.SentryLevel("sentry.level", sentry.LevelDebug),
+			"sentry.level=debug",
+		},
 	}
 
 	for _, tc := range tcs {
@@ -134,6 +156,16 @@ func TestAttr_SlogAttr(t *testing.T) {
 			attr.String("string", "m0t0k1ch1"),
 			slog.String("string", "m0t0k1ch1"),
 		},
+		{
+			"error",
+			attr.Error("error", errors.New("something went wrong")),
+			slog.Any("error", errors.New("something went wrong")),
+		},
+		{
+			"sentry.Level",
+			attr.SentryLevel("sentry.level", sentry.LevelDebug),
+			slog.Any("sentry.level", sentry.LevelDebug),
+		},
 	}
 
 	for _, tc := range tcs {
@@ -173,6 +205,16 @@ func TestAttr_SentryAttr(t *testing.T) {
 			"string",
 			attr.String("string", "m0t0k1ch1"),
 			sentryattr.String("string", "m0t0k1ch1"),
+		},
+		{
+			"error",
+			attr.Error("error", errors.New("something went wrong")),
+			sentryattr.String("error", "something went wrong"),
+		},
+		{
+			"sentry.Level",
+			attr.SentryLevel("sentry.level", sentry.LevelDebug),
+			sentryattr.String("sentry.level", string(sentry.LevelDebug)),
 		},
 	}
 
