@@ -62,7 +62,7 @@ func (a Attr) KV() (string, any) {
 }
 
 // String implements fmt.Stringer.
-// It returns the string representation of the Attr in the format "k=v".
+// It returns the string representation of the Attr in the format "key=value".
 func (a Attr) String() string {
 	return a.k + "=" + a.valueString()
 }
@@ -84,7 +84,7 @@ func (a Attr) valueString() string {
 	}
 }
 
-// SlogAttr returns the value as a slog.Attr.
+// SlogAttr returns a slog.Attr representation of the Attr.
 func (a Attr) SlogAttr() slog.Attr {
 	switch v := a.v.(type) {
 	case bool:
@@ -102,7 +102,7 @@ func (a Attr) SlogAttr() slog.Attr {
 	}
 }
 
-// SentryAttr returns the value as a sentry-go/attribute.Builder.
+// SentryAttr returns a sentry-go/attribute.Builder representation of the Attr.
 func (a Attr) SentryAttr() sentryattr.Builder {
 	switch v := a.v.(type) {
 	case bool:
