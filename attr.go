@@ -3,6 +3,7 @@ package attr
 import (
 	"fmt"
 	"log/slog"
+	"math"
 	"strconv"
 
 	"github.com/getsentry/sentry-go"
@@ -34,6 +35,11 @@ func Int(k string, v int) Attr {
 
 // Int64 returns a new Attr with the given key and int64 value.
 func Int64(k string, v int64) Attr {
+	return new(k, v)
+}
+
+// Uint64 returns a new Attr with the given key and uint64 value.
+func Uint64(k string, v uint64) Attr {
 	return new(k, v)
 }
 
@@ -86,6 +92,8 @@ func (a Attr) valueString() string {
 		return strconv.Itoa(v)
 	case int64:
 		return strconv.FormatInt(v, 10)
+	case uint64:
+		return strconv.FormatUint(v, 10)
 	case float64:
 		return strconv.FormatFloat(v, 'g', -1, 64)
 	case string:
@@ -108,6 +116,8 @@ func (a Attr) SlogAttr() slog.Attr {
 		return slog.Int(a.k, v)
 	case int64:
 		return slog.Int64(a.k, v)
+	case uint64:
+		return slog.Uint64(a.k, v)
 	case float64:
 		return slog.Float64(a.k, v)
 	case string:
@@ -126,6 +136,12 @@ func (a Attr) SentryAttr() sentryattr.Builder {
 		return sentryattr.Int(a.k, v)
 	case int64:
 		return sentryattr.Int64(a.k, v)
+	case uint64:
+		if v <= math.MaxInt64 {
+			return sentryattr.Int64(a.k, int64(v))
+		} else {
+			return sentryattr.String(a.k, a.valueString())
+		}
 	case float64:
 		return sentryattr.Float64(a.k, v)
 	case string:
