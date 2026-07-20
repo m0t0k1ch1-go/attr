@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"math"
+	"strconv"
 	"testing"
 
 	"github.com/getsentry/sentry-go"
@@ -43,6 +45,11 @@ func TestAttr_KV(t *testing.T) {
 			"int64",
 			attr.Int64("int64", 1),
 			output{"int64", int64(1)},
+		},
+		{
+			"uint64",
+			attr.Uint64("uint64", 1),
+			output{"uint64", uint64(1)},
 		},
 		{
 			"float64",
@@ -97,6 +104,11 @@ func TestAttr_String(t *testing.T) {
 			"int64=1",
 		},
 		{
+			"uint64",
+			attr.Uint64("uint64", 1),
+			"uint64=1",
+		},
+		{
 			"float64",
 			attr.Float64("float64", 1.1),
 			"float64=1.1",
@@ -147,6 +159,11 @@ func TestAttr_SlogAttr(t *testing.T) {
 			slog.Int64("int64", 1),
 		},
 		{
+			"uint64",
+			attr.Uint64("uint64", 1),
+			slog.Uint64("uint64", 1),
+		},
+		{
 			"float64",
 			attr.Float64("float64", 1.1),
 			slog.Float64("float64", 1.1),
@@ -195,6 +212,16 @@ func TestAttr_SentryAttr(t *testing.T) {
 			"int64",
 			attr.Int64("int64", 1),
 			sentryattr.Int64("int64", 1),
+		},
+		{
+			"uint64: max int64",
+			attr.Uint64("uint64", math.MaxInt64),
+			sentryattr.Int64("uint64", math.MaxInt64),
+		},
+		{
+			"uint64: max int64 + 1",
+			attr.Uint64("uint64", math.MaxInt64+1),
+			sentryattr.String("uint64", strconv.FormatUint(math.MaxInt64+1, 10)),
 		},
 		{
 			"float64",
