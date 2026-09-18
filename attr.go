@@ -83,7 +83,7 @@ func (a Attr) KV() (string, any) {
 }
 
 // String implements [fmt.Stringer].
-// It returns the [Attr] as a string in the format "key=value".
+// It encodes a as a string in the format "key=value".
 func (a Attr) String() string {
 	return a.k + "=" + a.valueString()
 }
@@ -111,7 +111,7 @@ func (a Attr) valueString() string {
 	}
 }
 
-// SlogAttr returns the [Attr] as a [slog.Attr].
+// SlogAttr converts a to a [slog.Attr].
 func (a Attr) SlogAttr() slog.Attr {
 	switch v := a.v.(type) {
 	case bool:
@@ -131,7 +131,7 @@ func (a Attr) SlogAttr() slog.Attr {
 	}
 }
 
-// SentryAttr returns the [Attr] as a [sentryattr.Builder].
+// SentryAttr converts a to a [sentryattr.Builder].
 func (a Attr) SentryAttr() sentryattr.Builder {
 	switch v := a.v.(type) {
 	case bool:
