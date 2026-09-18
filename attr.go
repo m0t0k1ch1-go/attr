@@ -10,6 +10,10 @@ import (
 	sentryattr "github.com/getsentry/sentry-go/attribute"
 )
 
+var (
+	_ fmt.Stringer = Attr{}
+)
+
 // Attr represents a key-value pair.
 type Attr struct {
 	k string
