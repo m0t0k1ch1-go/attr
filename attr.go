@@ -27,6 +27,11 @@ func new(k string, v any) Attr {
 	}
 }
 
+// Any returns a new [Attr] with the given key and any value.
+func Any(k string, v any) Attr {
+	return new(k, v)
+}
+
 // Bool returns a new [Attr] with the given key and bool value.
 func Bool(k string, v bool) Attr {
 	return new(k, v)
