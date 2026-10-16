@@ -32,11 +32,6 @@ func TestAttr_KV(t *testing.T) {
 		want output
 	}{
 		{
-			"any",
-			attr.Any("any", nil),
-			output{"any", nil},
-		},
-		{
 			"bool",
 			attr.Bool("bool", true),
 			output{"bool", true},
@@ -94,11 +89,6 @@ func TestAttr_String(t *testing.T) {
 		want string
 	}{
 		{
-			"any",
-			attr.Any("any", nil),
-			"any=<nil>",
-		},
-		{
 			"bool",
 			attr.Bool("bool", true),
 			"bool=true",
@@ -154,11 +144,6 @@ func TestAttr_SlogAttr(t *testing.T) {
 		want slog.Attr
 	}{
 		{
-			"any",
-			attr.Any("any", nil),
-			slog.Any("any", nil),
-		},
-		{
 			"bool",
 			attr.Bool("bool", true),
 			slog.Bool("bool", true),
@@ -213,11 +198,6 @@ func TestAttr_SentryAttr(t *testing.T) {
 		in   attr.Attr
 		want sentryattr.Builder
 	}{
-		{
-			"any",
-			attr.Any("any", nil),
-			sentryattr.String("any", "<nil>"),
-		},
 		{
 			"bool",
 			attr.Bool("bool", true),
