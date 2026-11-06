@@ -67,6 +67,11 @@ func TestAttr_KV(t *testing.T) {
 			output{"error", errors.New("something went wrong")},
 		},
 		{
+			"error: nil",
+			attr.Error("error", nil),
+			output{"error", "<nil>"},
+		},
+		{
 			"sentry.Level",
 			attr.SentryLevel("sentry.level", sentry.LevelDebug),
 			output{"sentry.level", sentry.LevelDebug},
@@ -124,6 +129,11 @@ func TestAttr_String(t *testing.T) {
 			"error=something went wrong",
 		},
 		{
+			"error: nil",
+			attr.Error("error", nil),
+			"error=<nil>",
+		},
+		{
 			"sentry.Level",
 			attr.SentryLevel("sentry.level", sentry.LevelDebug),
 			"sentry.level=debug",
@@ -177,6 +187,11 @@ func TestAttr_SlogAttr(t *testing.T) {
 			"error",
 			attr.Error("error", errors.New("something went wrong")),
 			slog.Any("error", errors.New("something went wrong")),
+		},
+		{
+			"error: nil",
+			attr.Error("error", nil),
+			slog.String("error", "<nil>"),
 		},
 		{
 			"sentry.Level",
@@ -237,6 +252,11 @@ func TestAttr_SentryAttr(t *testing.T) {
 			"error",
 			attr.Error("error", errors.New("something went wrong")),
 			sentryattr.String("error", "something went wrong"),
+		},
+		{
+			"error: nil",
+			attr.Error("error", nil),
+			sentryattr.String("error", "<nil>"),
 		},
 		{
 			"sentry.Level",
