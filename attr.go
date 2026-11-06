@@ -58,6 +58,7 @@ func String(k string, v string) Attr {
 }
 
 // Error returns a new [Attr] with the given key and error value.
+// It uses the string "<nil>" as the value if v is nil.
 func Error(k string, v error) Attr {
 	if v == nil {
 		return new(k, "<nil>")
