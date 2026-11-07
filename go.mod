@@ -2,7 +2,7 @@ module github.com/m0t0k1ch1-go/attr
 
 go 1.27
 
-toolchain go1.27.2
+toolchain go1.27.3
 
 require (
 	github.com/getsentry/sentry-go v0.50.0
