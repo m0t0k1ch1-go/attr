@@ -2,7 +2,7 @@ module github.com/m0t0k1ch1-go/attr
 
 go 1.27
 
-toolchain go1.27.2
+toolchain go1.27.3
 
 require (
 	github.com/getsentry/sentry-go v0.50.0
@@ -11,8 +11,8 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.6.0 // indirect
-	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/exp/typeparams v0.0.0-20261014143641-f0251eb4aa3e // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
+	golang.org/x/exp/typeparams v0.0.0-20261106192419-47ce03d25ef0 // indirect
 	golang.org/x/mod v0.42.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
